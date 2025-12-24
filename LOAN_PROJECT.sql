@@ -7,7 +7,7 @@ CREATE TABLE report (
     income DOUBLE,					-- Thu nhập khách hàng
     employment_year DOUBLE,			-- Thâm niên
     married INT, 					-- Tình trạng hôn nhân
-    depENDent INT, 					-- Người phụ thuộc
+    dependent INT, 					-- Người phụ thuộc
     loan_amount DOUBLE, 			-- Khoản vay
     loan_term INT, 					-- Thời hạn vay 
     credit_score DOUBLE, 			-- Điểm tín dụng 
@@ -37,7 +37,7 @@ SELECT
 	ROUND(AVG(age),3) age,
     ROUND(AVG(income),3) income,
     ROUND(AVG(employment_year),3) employment_year,
-    ROUND(AVG(depENDent),3) depENDent,
+    ROUND(AVG(dependent),3) dependent,
     ROUND(AVG(loan_amount),3) loan_amount,
     ROUND(AVG(loan_term),3) loan_term,
     ROUND(AVG(credit_score),3) credit_score,
@@ -52,7 +52,7 @@ SELECT
 	ROUND(AVG(age),3) age,
     ROUND(AVG(income),3) income,
     ROUND(AVG(employment_year),3) employment_year,
-    ROUND(AVG(depENDent),3) depENDent,
+    ROUND(AVG(dependent),3) dependent,
     ROUND(AVG(loan_amount),3) loan_amount,
     ROUND(AVG(loan_term),3) loan_term,
     ROUND(AVG(credit_score),3) credit_score,
@@ -186,6 +186,7 @@ FROM report
 GROUP BY loan_amount_scale
 ORDER BY loan_amount_scale;
 
+-- Xét ngưỡng cận biên của các yếu tố ở mức 5%
 -- 7. Liệu ở trạng thái tối ưu của các yếu tố nhân khẩu thì các yếu tố tài chính có tác động đến quyết định từ chối không?
 SELECT COUNT(*)
 FROM report r
@@ -213,7 +214,7 @@ CROSS JOIN y_AVG AVG
 WHERE r.approval = 0
 	AND r.age BETWEEN 36 AND 55
     AND r.employment_year >= 0.95*AVG.employment_year
-	AND r.depENDent <= 1.05*AVG.depENDent
+	AND r.dependent <= 1.05*AVG.dependent
     AND r.payment_history = 1
 	AND r.income >= 0.95*AVG.income
 	AND r.credit_score >= 0.95*AVG.credit_score
@@ -240,7 +241,7 @@ CROSS JOIN y_AVG AVG
 WHERE approval = 0
 	AND payment_history = 1
 	AND r.employment_year >= AVG.employment_year
-	AND r.depENDent <= 1.2*AVG.depENDent
+	AND r.dependent <= 1.2*AVG.dependent
 	AND r.income >= 0.8*AVG.income
 	AND r.credit_score >= 0.8*AVG.credit_score
 	AND r.existing_loan <= 1.2*AVG.existing_loan
