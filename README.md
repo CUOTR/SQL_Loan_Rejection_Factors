@@ -19,7 +19,7 @@ Analysis uses SQL; results presented in a report.
 
 **Tools**: SQL (MySQL-compatible).  
 
-## Project follows data analysis workflow: preparation, overview, factors, gray areas.  
+## PROJECT WORKFLOW
 
 ## 1. Preparing Data
 
